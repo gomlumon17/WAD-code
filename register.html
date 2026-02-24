@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>User Registration</title>
+</head>
+<body>
+
+<h2>User Registration Form</h2>
+
+<form id="regForm">
+    <label>Name:</label>
+    <input type="text" id="name" required><br><br>
+
+    <label>Email:</label>
+    <input type="email" id="email" required><br><br>
+
+    <label>Password:</label>
+    <input type="password" id="password" required><br><br>
+
+    <button type="submit">Register</button>
+</form>
+
+<br>
+<a href="list.html">View Registered Users</a>
+
+<script>
+let users = JSON.parse(localStorage.getItem("users")) || [];
+
+document.getElementById("regForm").addEventListener("submit", function(e){
+    e.preventDefault();
+
+    let name = document.getElementById("name").value;
+    let email = document.getElementById("email").value;
+    let password = document.getElementById("password").value;
+
+    let user = { name, email, password };
+
+    // Push to array
+    users.push(user);
+
+    // Store in LocalStorage
+    localStorage.setItem("users", JSON.stringify(users));
+
+    // AJAX POST Request
+    let xhr = new XMLHttpRequest();
+    xhr.open("POST", "https://jsonplaceholder.typicode.com/posts", true);
+    xhr.setRequestHeader("Content-Type", "application/json");
+
+    xhr.onreadystatechange = function() {
+        if(xhr.readyState === 4 && xhr.status === 201){
+            alert("User Registered Successfully!");
+        }
+    };
+
+    xhr.send(JSON.stringify(user));
+
+    document.getElementById("regForm").reset();
+});
+</script>
+
+</body>
+</html>
