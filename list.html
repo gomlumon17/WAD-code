@@ -2,16 +2,50 @@
 <html>
 <head>
     <title>Registered Users</title>
+    <style>
+        body {
+            font-family: Arial;
+            background: #0f172a;
+            color: white;
+            text-align: center;
+        }
+
+        table {
+            margin: auto;
+            border-collapse: collapse;
+            width: 90%;
+            background: #1e293b;
+        }
+
+        th, td {
+            padding: 10px;
+            border: 1px solid #334155;
+        }
+
+        th {
+            background: #334155;
+        }
+
+        tr:hover {
+            background: #475569;
+        }
+
+        a {
+            color: #38bdf8;
+        }
+    </style>
 </head>
 <body>
 
 <h2>Registered Users List</h2>
 
-<table border="1" id="userTable">
+<table id="userTable">
     <tr>
         <th>Name</th>
         <th>Email</th>
-        <th>Password</th>
+        <th>Phone</th>
+        <th>Gender</th>
+        <th>DOB</th>
     </tr>
 </table>
 
@@ -26,9 +60,11 @@ let table = document.getElementById("userTable");
 users.forEach(function(user){
     let row = table.insertRow();
 
-    row.insertCell(0).innerHTML = user.name;
+    row.insertCell(0).innerHTML = user.firstName + " " + user.lastName;
     row.insertCell(1).innerHTML = user.email;
-    row.insertCell(2).innerHTML = user.password;
+    row.insertCell(2).innerHTML = user.phone;
+    row.insertCell(3).innerHTML = user.gender;
+    row.insertCell(4).innerHTML = user.dob;
 });
 </script>
 

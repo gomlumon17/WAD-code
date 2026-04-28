@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Society Portal</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      background: linear-gradient(135deg, #eef4ff, #f8fbff);
+      color: #222;
+      line-height: 1.6;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    .navbar {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 8%;
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+    }
+
+    .logo {
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: #0f4c81;
+    }
+
+    .logo span {
+      color: #ff7a00;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 26px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: #222;
+      font-weight: 500;
+      position: relative;
+      transition: 0.3s;
+    }
+
+    .nav-links a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -6px;
+      width: 0;
+      height: 2px;
+      background: #0f4c81;
+      transition: 0.3s;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active {
+      color: #0f4c81;
+    }
+
+    .nav-links a:hover::after,
+    .nav-links a.active::after {
+      width: 100%;
+    }
+
+    .menu-btn {
+      display: none;
+      font-size: 1.5rem;
+      background: none;
+      border: none;
+      cursor: pointer;
+    }
+
+    .hero {
+      min-height: 88vh;
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      align-items: center;
+      padding: 60px 8%;
+      gap: 40px;
+    }
+
+    .hero-text h1 {
+      font-size: 3rem;
+      color: #0f4c81;
+      margin-bottom: 18px;
+    }
+
+    .hero-text p {
+      font-size: 1.05rem;
+      margin-bottom: 28px;
+      color: #444;
+      max-width: 600px;
+    }
+
+    .hero-btns {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      padding: 12px 24px;
+      border-radius: 12px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: 0.3s ease;
+      display: inline-block;
+    }
+
+    .btn-primary {
+      background: #0f4c81;
+      color: white;
+      box-shadow: 0 10px 25px rgba(15, 76, 129, 0.25);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-3px);
+      background: #0a3960;
+    }
+
+    .btn-outline {
+      border: 2px solid #0f4c81;
+      color: #0f4c81;
+    }
+
+    .btn-outline:hover {
+      transform: translateY(-3px);
+      background: #0f4c81;
+      color: white;
+    }
+
+    .hero-card {
+      background: white;
+      border-radius: 24px;
+      padding: 30px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.08);
+      animation: floatCard 4s ease-in-out infinite;
+    }
+
+    @keyframes floatCard {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+
+    .hero-card h3 {
+      color: #0f4c81;
+      margin-bottom: 18px;
+    }
+
+    .card-list {
+      display: grid;
+      gap: 14px;
+    }
+
+    .mini-card {
+      background: #f4f8fd;
+      border-left: 5px solid #ff7a00;
+      padding: 14px 16px;
+      border-radius: 14px;
+    }
+
+    section {
+      padding: 70px 8%;
+    }
+
+    .section-title {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .section-title h2 {
+      color: #0f4c81;
+      font-size: 2rem;
+      margin-bottom: 10px;
+    }
+
+    .section-title p {
+      color: #555;
+      max-width: 720px;
+      margin: auto;
+    }
+
+    .features-grid,
+    .notice-grid,
+    .contact-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 24px;
+    }
+
+    .feature-box,
+    .notice-box,
+    .contact-box {
+      background: white;
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: 0 12px 35px rgba(0, 0, 0, 0.07);
+      transition: 0.3s ease;
+    }
+
+    .feature-box:hover,
+    .notice-box:hover,
+    .contact-box:hover {
+      transform: translateY(-8px);
+    }
+
+    .feature-box h3,
+    .notice-box h3,
+    .contact-box h3 {
+      color: #0f4c81;
+      margin-bottom: 12px;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 22px;
+    }
+
+    .stat-box {
+      background: linear-gradient(135deg, #0f4c81, #1f6fb2);
+      color: white;
+      padding: 26px;
+      border-radius: 20px;
+      text-align: center;
+      box-shadow: 0 12px 30px rgba(15, 76, 129, 0.25);
+    }
+
+    .stat-box h3 {
+      font-size: 2rem;
+      margin-bottom: 6px;
+    }
+
+    .notice-box small {
+      color: #888;
+      display: block;
+      margin-bottom: 10px;
+    }
+
+    .contact-box p {
+      margin-bottom: 8px;
+    }
+
+    .contact-form {
+      background: white;
+      margin-top: 30px;
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 12px 35px rgba(0,0,0,0.07);
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 18px;
+    }
+
+    .contact-form input,
+    .contact-form textarea,
+    .contact-form select {
+      width: 100%;
+      padding: 14px 16px;
+      border: 1px solid #d4dce6;
+      border-radius: 12px;
+      outline: none;
+      margin-top: 8px;
+      transition: 0.3s;
+    }
+
+    .contact-form input:focus,
+    .contact-form textarea:focus,
+    .contact-form select:focus {
+      border-color: #0f4c81;
+      box-shadow: 0 0 0 4px rgba(15, 76, 129, 0.08);
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 140px;
+    }
+
+    .full-width {
+      grid-column: 1 / -1;
+    }
+
+    .footer {
+      background: #0b2e4d;
+      color: white;
+      text-align: center;
+      padding: 22px;
+      margin-top: 30px;
+    }
+
+    .tag {
+      display: inline-block;
+      background: #e7f1fb;
+      color: #0f4c81;
+      padding: 6px 12px;
+      border-radius: 999px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 14px;
+    }
+
+    @media (max-width: 1200px) {
+      .hero {
+        grid-template-columns: 1fr;
+        text-align: center;
+        padding: 40px 6%;
+      }
+
+      .hero-text h1 {
+        font-size: 2.2rem;
+      }
+
+      section {
+        padding: 50px 6%;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .hero {
+        padding: 30px 5%;
+      }
+
+      .hero-text h1 {
+        font-size: 1.8rem;
+      }
+
+      .hero-text p {
+        font-size: 0.95rem;
+      }
+
+      .nav-links {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 72px;
+        right: 5%;
+        background: white;
+        width: 200px;
+        padding: 16px;
+        border-radius: 12px;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+      }
+
+      .nav-links.show {
+        display: flex;
+      }
+
+      .menu-btn {
+        display: block;
+      }
+
+      section {
+        padding: 40px 5%;
+      }
+    }
+
+      .hero-text p {
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .hero-btns {
+        justify-content: center;
+      }
+
+      .nav-links {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 72px;
+        right: 8%;
+        background: white;
+        width: 220px;
+        padding: 18px;
+        border-radius: 14px;
+        box-shadow: 0 12px 30px rgba(0,0,0,0.1);
+      }
+
+      .nav-links.show {
+        display: flex;
+      }
+
+      .menu-btn {
+        display: block;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="logo">Society<span>Portal</span></div>
+    <button class="menu-btn" onclick="toggleMenu()">☰</button>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#home" class="active">Home</a></li>
+      <li><a href="#menu">Menu</a></li>
+      <li><a href="#maintenance">Maintenance</a></li>
+      <li><a href="#notices">Notices</a></li>
+      <li><a href="#contact">Contact Us</a></li>
+    </ul>
+  </nav>
+
+  <section class="hero" id="home">
+    <div class="hero-text">
+      <span class="tag">Smart Society Management</span>
+      <h1>Welcome to Your Society Portal</h1>
+      <p>
+        Manage maintenance payments, check society notices, raise service requests,
+        and stay connected with residents through one modern and user-friendly platform.
+      </p>
+      <div class="hero-btns">
+        <a href="#maintenance" class="btn btn-primary">Pay Maintenance</a>
+        <a href="#notices" class="btn btn-outline">View Notices</a>
+      </div>
+    </div>
+
+    <div class="hero-card">
+      <h3>Resident Quick Panel</h3>
+      <div class="card-list">
+        <div class="mini-card">
+          <strong>Pending Maintenance</strong>
+          <p>₹3,500 due before 25 March</p>
+        </div>
+        <div class="mini-card">
+          <strong>Upcoming Event</strong>
+          <p>Society Meeting on Sunday, 6 PM</p>
+        </div>
+        <div class="mini-card">
+          <strong>New Notice</strong>
+          <p>Water supply maintenance on Friday</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="menu">
+    <div class="section-title">
+      <h2>Portal Features</h2>
+      <p>Useful modules to help residents and committee members manage daily society tasks efficiently.</p>
+    </div>
+    <div class="features-grid">
+      <div class="feature-box">
+        <h3>Resident Dashboard</h3>
+        <p>View account summary, payment status, notices, and service updates from one place.</p>
+      </div>
+      <div class="feature-box">
+        <h3>Online Maintenance</h3>
+        <p>Track monthly dues, pay online, and check payment receipts instantly.</p>
+      </div>
+      <div class="feature-box">
+        <h3>Complaint Management</h3>
+        <p>Raise complaints related to water, lift, security, cleaning, and monitor progress.</p>
+      </div>
+      <div class="feature-box">
+        <h3>Visitor Information</h3>
+        <p>Manage guest entries and improve society security with a centralized system.</p>
+      </div>
+      <div class="feature-box">
+        <h3>Event Updates</h3>
+        <p>Get details about meetings, celebrations, and community events.</p>
+      </div>
+      <div class="feature-box">
+        <h3>Emergency Contacts</h3>
+        <p>Quick access to management office, security, plumber, electrician, and ambulance contacts.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="maintenance">
+    <div class="section-title">
+      <h2>Maintenance Overview</h2>
+      <p>Keep maintenance tracking simple with transparent records and quick access to payment details.</p>
+    </div>
+    <div class="stats">
+      <div class="stat-box">
+        <h3>₹3,500</h3>
+        <p>Current Due</p>
+      </div>
+      <div class="stat-box">
+        <h3>25 Mar</h3>
+        <p>Due Date</p>
+      </div>
+      <div class="stat-box">
+        <h3>112</h3>
+        <p>Paid Members</p>
+      </div>
+      <div class="stat-box">
+        <h3>18</h3>
+        <p>Pending Members</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="notices">
+    <div class="section-title">
+      <h2>Latest Notices</h2>
+      <p>Important announcements from the society committee.</p>
+    </div>
+    <div class="notice-grid">
+      <div class="notice-box">
+        <small>15 March 2026</small>
+        <h3>Water Tank Cleaning</h3>
+        <p>Water supply will be temporarily unavailable from 10 AM to 1 PM due to tank cleaning work.</p>
+      </div>
+      <div class="notice-box">
+        <small>13 March 2026</small>
+        <h3>Monthly Society Meeting</h3>
+        <p>All residents are requested to attend the monthly meeting in the community hall at 6 PM.</p>
+      </div>
+      <div class="notice-box">
+        <small>10 March 2026</small>
+        <h3>Parking Rules Update</h3>
+        <p>Please follow the revised parking guidelines to avoid inconvenience and maintain order.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="section-title">
+      <h2>Contact Us</h2>
+      <p>Reach out to the society office for support, complaints, or general inquiries.</p>
+    </div>
+
+    <div class="contact-grid">
+      <div class="contact-box">
+        <h3>Society Office</h3>
+        <p><strong>Phone:</strong> +91 98765 43210</p>
+        <p><strong>Email:</strong> office@societyportal.com</p>
+        <p><strong>Time:</strong> 10:00 AM - 6:00 PM</p>
+      </div>
+      <div class="contact-box">
+        <h3>Emergency Help</h3>
+        <p><strong>Security:</strong> +91 99887 77665</p>
+        <p><strong>Electrician:</strong> +91 91234 56789</p>
+        <p><strong>Plumber:</strong> +91 90000 11122</p>
+      </div>
+    </div>
+
+    <form class="contact-form" onsubmit="submitForm(event)">
+      <div class="form-grid">
+        <div>
+          <label>Full Name</label>
+          <input type="text" id="name" placeholder="Enter your name" required>
+        </div>
+        <div>
+          <label>Email Address</label>
+          <input type="email" id="email" placeholder="Enter your email" required>
+        </div>
+        <div>
+          <label>Flat Number</label>
+          <input type="text" id="flat" placeholder="E.g. A-204" required>
+        </div>
+        <div>
+          <label>Subject</label>
+          <select id="subject" required>
+            <option value="">Select subject</option>
+            <option>Complaint</option>
+            <option>Maintenance Query</option>
+            <option>General Inquiry</option>
+            <option>Notice Related</option>
+          </select>
+        </div>
+        <div class="full-width">
+          <label>Message</label>
+          <textarea id="message" placeholder="Write your message here..." required></textarea>
+        </div>
+        <div class="full-width">
+          <button type="submit" class="btn btn-primary">Send Message</button>
+        </div>
+      </div>
+    </form>
+  </section>
+
+  <footer class="footer">
+    <p>© 2026 Society Portal. All rights reserved.</p>
+  </footer>
+
+  <script>
+    function toggleMenu() {
+      document.getElementById('navLinks').classList.toggle('show');
+    }
+
+    function submitForm(event) {
+      event.preventDefault();
+      const name = document.getElementById('name').value;
+      alert(`Thank you, ${name}! Your message has been submitted successfully.`);
+      event.target.reset();
+    }
+
+    const navItems = document.querySelectorAll('.nav-links a');
+    navItems.forEach(link => {
+      link.addEventListener('click', () => {
+        navItems.forEach(item => item.classList.remove('active'));
+        link.classList.add('active');
+        document.getElementById('navLinks').classList.remove('show');
+      });
+    });
+  </script>
+</body>
+</html>
